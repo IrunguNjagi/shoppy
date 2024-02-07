@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -312,32 +313,73 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 1.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  height: 170,
-                  width: 170,
-
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: Colors.pinkAccent.withOpacity(0.4),
-                  ),
-                ),
-                Container(
-                  height: 170,
-                  width: 170,
-
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: Colors.pinkAccent.withOpacity(0.4),
-                  ),
-                ),
-              ],
-            ),
-          )
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              FutureBuilder<DocumentSnapshot>(
+                future: FirebaseFirestore.instance.collection('products').doc('ERInsAZ7p1tCm3kdeJmC').get(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  }
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  }
+                  final productData = snapshot.data?.data()as Map<String, dynamic>?;
+                  if (productData != null) {
+                    // Add your content for the first product here...
+                    return Container(
+                      height: 170,
+                      width: 190,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: Colors.grey.withOpacity(0.1),
+                      ),
+                      child: Image.network(
+                        productData['image'] as String,
+                        height: 100,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  } else {
+                    return SizedBox();
+                  }
+                },
+              ),
+              FutureBuilder<DocumentSnapshot>(
+                future: FirebaseFirestore.instance.collection('products').doc('Kwo9ECQ4ZZBsOfhWbphb').get(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  }
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  }
+                  final productData = snapshot.data?.data()as Map<String, dynamic>;
+                  if (productData != null) {
+                    // Add your content for the second product here...
+                    return Container(
+                      height: 170,
+                      width: 190,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: Colors.grey.withOpacity(0.1),
+                      ),
+                      child: Image.network(
+                        productData['image'],
+                        height: 100,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  } else {
+                    return SizedBox();
+                  }
+                },
+              ),
+            ],
+          ),
         ],
       ),
     );
