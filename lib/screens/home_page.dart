@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:shoppy/screens/categories.dart';
+import 'package:shoppy/screens/categories_test.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar:  GNav(
+      bottomNavigationBar: GNav(
         //gap: 3.0,
         color: Colors.grey,
         activeColor: Colors.pinkAccent,
@@ -23,11 +25,12 @@ class _HomePageState extends State<HomePage> {
           GButton(
             icon: Icons.home,
             text: 'Home',
-            onPressed: (){},
+            onPressed: () {},
           ),
           GButton(
             icon: Icons.favorite,
             text: 'Wishlist',
+
           ),
           GButton(
             icon: Icons.book,
@@ -88,11 +91,11 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                   Text(
+                  Text(
                     'Best Seller!',
                     style: GoogleFonts.playfairDisplay(
-                        fontSize: 13.0,
-                        color: Colors.white,
+                      fontSize: 13.0,
+                      color: Colors.white,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -119,7 +122,6 @@ class _HomePageState extends State<HomePage> {
                       style: GoogleFonts.poppins(
                         fontSize: 11.0,
                         color: Colors.pinkAccent,
-
                       ),
                     ),
                   ),
@@ -132,9 +134,15 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.only(left: 18.0),
             child: Row(
               children: [
-                Icon(Icons.category,color: Colors.pinkAccent),
+                Icon(Icons.category, color: Colors.pinkAccent),
                 SizedBox(width: 10),
-                Text('Categories',style: GoogleFonts.poppins(fontSize: 17.0,fontWeight: FontWeight.w500,color: Colors.black),)
+                Text(
+                  'Categories',
+                  style: GoogleFonts.poppins(
+                      fontSize: 17.0,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black),
+                )
               ],
             ),
           ),
@@ -146,7 +154,7 @@ class _HomePageState extends State<HomePage> {
               borderRadius: BorderRadius.circular(12.0),
               color: Colors.grey.withOpacity(0.3),
             ),
-            child:  Column(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Row(
@@ -289,7 +297,9 @@ class _HomePageState extends State<HomePage> {
                         // Adjust the spacing between IconButton and Text
                         Text(
                           'More',
-                          style: TextStyle(fontSize: 13,color: Colors.black.withOpacity(0.7)),
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.black.withOpacity(0.7)),
                         ),
                       ],
                     ),
@@ -298,17 +308,31 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          const SizedBox(height: 8),
-           Padding(
+          const SizedBox(height: 18),
+          Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.0),
             child: Row(
-
               children: [
-                Icon(Icons.thumb_up_alt_outlined,color: Colors.pinkAccent),
+                Icon(Icons.thumb_up_alt_outlined, color: Colors.pinkAccent),
                 SizedBox(width: 10),
-                Text('Recommended',style: GoogleFonts.poppins(fontSize: 18.0,fontWeight: FontWeight.w500)),
+                Text('Recommended',
+                    style: GoogleFonts.poppins(
+                        fontSize: 18.0, fontWeight: FontWeight.w500)),
                 SizedBox(width: 120),
-                Text('See more',style: GoogleFonts.poppins(fontSize: 12.0,color: Colors.pinkAccent.withOpacity(0.8))),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TabBarPage(),
+                          )
+                      );
+                    },
+                    child: Text('See more',
+                        style: GoogleFonts.poppins(
+                          fontSize: 12.0,
+                          color: Colors.pinkAccent.withOpacity(0.8),
+                        ))),
               ],
             ),
           ),
@@ -317,7 +341,10 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               FutureBuilder<DocumentSnapshot>(
-                future: FirebaseFirestore.instance.collection('products').doc('ERInsAZ7p1tCm3kdeJmC').get(),
+                future: FirebaseFirestore.instance
+                    .collection('products')
+                    .doc('ERInsAZ7p1tCm3kdeJmC')
+                    .get(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
@@ -325,7 +352,8 @@ class _HomePageState extends State<HomePage> {
                   if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   }
-                  final productData = snapshot.data?.data()as Map<String, dynamic>?;
+                  final productData =
+                      snapshot.data?.data() as Map<String, dynamic>?;
                   if (productData != null) {
                     // Add your content for the first product here...
                     return Container(
@@ -348,7 +376,10 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               FutureBuilder<DocumentSnapshot>(
-                future: FirebaseFirestore.instance.collection('products').doc('Kwo9ECQ4ZZBsOfhWbphb').get(),
+                future: FirebaseFirestore.instance
+                    .collection('products')
+                    .doc('Kwo9ECQ4ZZBsOfhWbphb')
+                    .get(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
@@ -356,7 +387,8 @@ class _HomePageState extends State<HomePage> {
                   if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   }
-                  final productData = snapshot.data?.data()as Map<String, dynamic>;
+                  final productData =
+                      snapshot.data?.data() as Map<String, dynamic>;
                   if (productData != null) {
                     // Add your content for the second product here...
                     return Container(
