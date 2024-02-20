@@ -2,8 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:shoppy/screens/cart_page.dart';
 import 'package:shoppy/screens/categories.dart';
-import 'package:shoppy/screens/categories_test.dart';
+import 'package:shoppy/screens/product_categories.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -68,7 +69,9 @@ class _HomePageState extends State<HomePage> {
                   icon: const Icon(Icons.camera_alt_outlined),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CartPage()));
+                  },
                   icon: const Icon(Icons.shopping_cart),
                 ),
               ],
@@ -109,19 +112,24 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   const SizedBox(height: 15.0),
-                  Container(
-                    alignment: Alignment.center,
-                    height: 40,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Colors.white,
-                    ),
-                    child: Text(
-                      'Shop Now!',
-                      style: GoogleFonts.poppins(
-                        fontSize: 11.0,
-                        color: Colors.pinkAccent,
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductCategories()));
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 40,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: Colors.white,
+                      ),
+                      child: Text(
+                        'Shop Now!',
+                        style: GoogleFonts.poppins(
+                          fontSize: 11.0,
+                          color: Colors.pinkAccent,
+                        ),
                       ),
                     ),
                   ),
@@ -151,8 +159,8 @@ class _HomePageState extends State<HomePage> {
             height: 160,
             width: 370,
             decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(12.0),
-              color: Colors.grey.withOpacity(0.3),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -324,7 +332,7 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => TabBarPage(),
+                            builder: (context) => ProductCategories(),
                           )
                       );
                     },
