@@ -27,4 +27,18 @@ class FirebaseServices {
       throw Exception('User not logged in');
     }
   }
+
+  Future<void> addToSaved(String productId) async {
+    String? userId = getUserId();
+    if (userId != null) {
+      await usersRef
+          .doc(userId)
+          .collection('Saved')
+          .doc(productId)
+          .set({'added_at': Timestamp.now()});
+    } else {
+      throw Exception('User not logged in');
+    }
+  }
+
 }

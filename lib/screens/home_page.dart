@@ -17,32 +17,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: GNav(
-        //gap: 3.0,
-        color: Colors.grey,
-        activeColor: Colors.pinkAccent,
-        backgroundColor: Colors.white,
-        tabs: [
-          GButton(
-            icon: Icons.home,
-            text: 'Home',
-            onPressed: () {},
-          ),
-          GButton(
-            icon: Icons.favorite,
-            text: 'Wishlist',
-
-          ),
-          GButton(
-            icon: Icons.book,
-            text: 'Transaction',
-          ),
-          GButton(
-            icon: Icons.person,
-            text: 'Profile',
-          ),
-        ],
-      ),
       body: Column(
         children: [
           const SizedBox(height: 30),
@@ -80,11 +54,11 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(height: 30),
           Container(
             alignment: Alignment.centerLeft,
-            height: 150,
+            height: 160,
             width: 380,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.0),
-              color: Colors.red.withOpacity(0.7),
+              color: Color(0xFFF05152),
             ),
             child: Padding(
               padding: const EdgeInsets.only(

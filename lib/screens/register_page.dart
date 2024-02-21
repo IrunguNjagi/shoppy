@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shoppy/screens/home_page.dart';
+import 'package:shoppy/screens/landing_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -94,9 +95,9 @@ class _LoginPageState extends State<LoginPage> {
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
-      // Navigate to HomePage after successful login
+      // Navigate to LandingPage after successful login
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
+          context, MaterialPageRoute(builder: (context) => Landingpage()));
     } on FirebaseAuthException catch (e) {
       // Handle Firebase authentication errors
       _showErrorDialog(e.message ?? 'An error occurred');
@@ -200,9 +201,9 @@ class _RegisterPageState extends State<RegisterPage> {
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
-      // Navigate to HomePage after successful registration
+      // Navigate to Login after successful registration
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
+          context, MaterialPageRoute(builder: (context) => LoginPage()));
     } on FirebaseAuthException catch (e) {
       // Handle Firebase authentication errors
       _showErrorDialog(e.message ?? 'An error occurred');

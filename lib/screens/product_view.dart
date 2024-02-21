@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:like_button/like_button.dart';
 import 'package:shoppy/services/firebase_services.dart';
 import 'package:shoppy/widgets/custom_action_bar.dart';
 
@@ -15,6 +16,8 @@ class ProductDetailPage extends StatefulWidget {
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
   final FirebaseServices _firebaseServices = FirebaseServices();
+
+  bool _isSaved = false;
 
   Future<DocumentSnapshot> _fetchProductDetails() async {
     return _firebaseServices.productsRef.doc(widget.product.id).get();
@@ -40,6 +43,66 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       );
     }
   }
+
+  Future<void> _addtoSaved() async {
+    setState(() {
+      _isSaved = !_isSaved;
+    });
+
+    if (_isSaved) {
+      // Add the item to the 'Saved' collection
+      await _firebaseServices.usersRef
+          .doc(_firebaseServices.getUserId())
+          .collection('Saved')
+          .doc(widget.product.id)
+          .set({
+        'productId': widget.product.id,
+        // Add other relevant data if needed
+      });
+      print('Product Saved');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Product Saved'),
+          duration: Duration(seconds: 4),
+        ),
+      );
+    } else {
+      // Remove the item from the 'Saved' collection
+      await _firebaseServices.usersRef
+          .doc(_firebaseServices.getUserId())
+          .collection('Saved')
+          .doc(widget.product.id)
+          .delete();
+      print('Product removed from saved');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Product removed from saved'),
+          duration: Duration(seconds: 4),
+        ),
+      );
+    }
+  }
+
+  /*Future<void> _addtoSaved() async {
+    try {
+      await _firebaseServices.addToSaved(widget.product.id);
+      print('Product Saved');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Product Saved'),
+          duration: Duration(seconds: 4),
+        ),
+      );
+    } catch (e) {
+      print('Error saving product: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to save product'),
+          duration: Duration(seconds: 4),
+        ),
+      );
+    }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -77,12 +140,27 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           fit: BoxFit.cover,
                         ),
                         SizedBox(height: 20),
-                        Text(
-                          productData['name'],
-                          style: GoogleFonts.poppins(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              productData['name'],
+                              style: GoogleFonts.poppins(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: (){
+                                _addtoSaved();
+                              },
+                              child: Icon(
+                                Icons.favorite,
+                                color: _isSaved ? Colors.pinkAccent : Colors.grey,
+                                size: 30,
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(height: 10),
                         Text(
