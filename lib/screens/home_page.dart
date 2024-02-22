@@ -5,6 +5,8 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shoppy/screens/cart_page.dart';
 import 'package:shoppy/screens/categories.dart';
 import 'package:shoppy/screens/product_categories.dart';
+import 'package:shoppy/screens/product_view.dart';
+import 'package:shoppy/widgets/search_tab.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,6 +16,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  TextEditingController _searchController = TextEditingController();
+  String _searchString = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,25 +29,9 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.all(18.0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          width: 1.5,
-                          color: Colors.grey,
-                        ),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      hintText: 'What are you looking for?',
-                    ),
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.camera_alt_outlined),
-                ),
+                Text('Welcome User',style: GoogleFonts.poppins(fontSize: 25,fontWeight: FontWeight.w600),),
                 IconButton(
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context)=>CartPage()));
@@ -149,6 +139,7 @@ class _HomePageState extends State<HomePage> {
                           icon: Icon(Icons.watch),
                           onPressed: () {
                             // Add your onPressed logic here
+
                           },
                           iconSize: 20,
                         ),
@@ -338,18 +329,28 @@ class _HomePageState extends State<HomePage> {
                       snapshot.data?.data() as Map<String, dynamic>?;
                   if (productData != null) {
                     // Add your content for the first product here...
-                    return Container(
-                      height: 170,
-                      width: 190,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.grey.withOpacity(0.1),
-                      ),
-                      child: Image.network(
-                        productData['image'] as String,
-                        height: 100,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProductDetailPage(product: snapshot.data!), // Pass product data to product view page
+                          ),
+                        );
+                      },
+                      child: Container(
+                        height: 170,
+                        width: 190,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Colors.grey.withOpacity(0.1),
+                        ),
+                        child: Image.network(
+                          productData['image'] as String,
+                          height: 100,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     );
                   } else {
@@ -373,18 +374,28 @@ class _HomePageState extends State<HomePage> {
                       snapshot.data?.data() as Map<String, dynamic>;
                   if (productData != null) {
                     // Add your content for the second product here...
-                    return Container(
-                      height: 170,
-                      width: 190,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.grey.withOpacity(0.1),
-                      ),
-                      child: Image.network(
-                        productData['image'],
-                        height: 100,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProductDetailPage(product: snapshot.data!), // Pass product data to product view page
+                          ),
+                        );
+                      },
+                      child: Container(
+                        height: 170,
+                        width: 190,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Colors.grey.withOpacity(0.1),
+                        ),
+                        child: Image.network(
+                          productData['image'],
+                          height: 100,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     );
                   } else {

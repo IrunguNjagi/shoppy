@@ -4,6 +4,7 @@ import 'package:shoppy/screens/cart_page.dart';
 import 'package:shoppy/screens/home_page.dart';
 import 'package:shoppy/screens/product_view.dart';
 import 'package:shoppy/screens/saved.dart';
+import 'package:shoppy/widgets/search_tab.dart';
 
 class Landingpage extends StatefulWidget {
   const Landingpage({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class _LandingpageState extends State<Landingpage> {
   List<Widget> _pages = <Widget>[
     HomePage(),
     SaveTab(),
+    SearchTab(),
   ];
 
   void _onItemTapped(int index){
@@ -55,8 +57,8 @@ class _LandingpageState extends State<Landingpage> {
             },
           ),
           GButton(
-            icon: Icons.book,
-            text: 'Transaction',
+            icon: Icons.search_sharp,
+            text: 'Search',
             onPressed: () {
               setState(() {
                 _selectedIndex = 2;
