@@ -3,6 +3,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shoppy/screens/cart_page.dart';
 import 'package:shoppy/screens/home_page.dart';
 import 'package:shoppy/screens/product_view.dart';
+import 'package:shoppy/screens/profle_page.dart';
 import 'package:shoppy/screens/saved.dart';
 import 'package:shoppy/widgets/search_tab.dart';
 
@@ -20,6 +21,7 @@ class _LandingpageState extends State<Landingpage> {
     HomePage(),
     SaveTab(),
     SearchTab(),
+    LogoutPage(),
   ];
 
   void _onItemTapped(int index){

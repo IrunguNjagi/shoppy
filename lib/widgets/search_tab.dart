@@ -16,7 +16,9 @@ class _SearchTabState extends State<SearchTab> {
   String _searchString = "";
 
   void refreshPage() {
-    setState(() {});
+    setState(() {
+      _searchString = "";
+    });
   }
 
   @override
@@ -55,6 +57,14 @@ class _SearchTabState extends State<SearchTab> {
                   }
                   //Collection data ready to display
                   if (snapshot.connectionState == ConnectionState.done) {
+                    //if no products found
+                    if (snapshot.data!.docs.isEmpty) {
+                      return Scaffold(
+                        body: Center(
+                          child: Text("Product not found"),
+                        ),
+                      );
+                    }
                     //Display data inside a ListView
                     return ListView(
                       padding: EdgeInsets.only(
@@ -195,24 +205,26 @@ class _SearchTabState extends State<SearchTab> {
             padding: const EdgeInsets.only(
               top: 45,
             ),
-            child: TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        width: 0,
-                        style: BorderStyle.none,
+            child: Expanded(
+              child: TextField(
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          width: 0,
+                          style: BorderStyle.none,
+                        ),
                       ),
-                    ),
-                    filled: true,
-                    hintStyle: TextStyle(color: Colors.grey[800]),
-                    hintText: "Search for product",
-                    fillColor: Colors.grey[100]),
-                onSubmitted: (value) {
-                  setState(() {
-                    _searchString = value.toLowerCase();
-                  });
-                }),
+                      filled: true,
+                      hintStyle: TextStyle(color: Colors.grey[800]),
+                      hintText: "Search for product",
+                      fillColor: Colors.grey[100]),
+                  onSubmitted: (value) {
+                    setState(() {
+                      _searchString = value.toLowerCase();
+                    });
+                  }),
+            ),
           ),
         ],
       ),

@@ -82,6 +82,14 @@ class _ProductCategoriesState extends State<ProductCategories> {
                     }
                     final products = snapshot.data?.docs;
                     if(products == null || products.isEmpty){
+                      //if db has no products
+                      if (snapshot.data!.docs.isEmpty) {
+                        return Scaffold(
+                          body: Center(
+                            child: Text("Currently Sold Out!"),
+                          ),
+                        );
+                      }
                       return Center(child: CircularProgressIndicator());
                     }
                     return Padding(

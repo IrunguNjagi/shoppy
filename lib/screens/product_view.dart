@@ -19,8 +19,31 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   bool _isSaved = false;
 
+  @override
+  void initState() {
+    super.initState();
+    _checkIfSaved();
+  }
+
   Future<DocumentSnapshot> _fetchProductDetails() async {
     return _firebaseServices.productsRef.doc(widget.product.id).get();
+  }
+
+
+  Future<void> _checkIfSaved() async {
+    try {
+      final snapshot = await _firebaseServices.usersRef
+          .doc(_firebaseServices.getUserId())
+          .collection('Saved')
+          .doc(widget.product.id)
+          .get();
+
+      setState(() {
+        _isSaved = snapshot.exists;
+      });
+    } catch (e) {
+      print('Error checking if product is saved: $e');
+    }
   }
 
   Future<void> _addtoCart() async {

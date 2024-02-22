@@ -38,6 +38,13 @@ class _SaveTabState extends State<SaveTab> {
                 }
                 //Collection data ready to display
                 if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.data!.docs.isEmpty) {
+                    return Scaffold(
+                      body: Center(
+                        child: Text("No saved products"),
+                      ),
+                    );
+                  }
                   //Display data inside a ListView
                   return ListView(
                     padding: EdgeInsets.only(
