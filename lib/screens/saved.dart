@@ -173,7 +173,7 @@ class _SaveTabState extends State<SaveTab> {
 
           CustomActionBar(
             title: 'Saved',
-            hasBackArrow: true,
+            hasBackArrow: false,
           ),
         ],
       ),

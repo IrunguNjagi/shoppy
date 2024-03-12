@@ -205,25 +205,30 @@ class _SearchTabState extends State<SearchTab> {
             padding: const EdgeInsets.only(
               top: 45,
             ),
-            child: Expanded(
-              child: TextField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          width: 0,
-                          style: BorderStyle.none,
-                        ),
-                      ),
-                      filled: true,
-                      hintStyle: TextStyle(color: Colors.grey[800]),
-                      hintText: "Search for product",
-                      fillColor: Colors.grey[100]),
-                  onSubmitted: (value) {
-                    setState(() {
-                      _searchString = value.toLowerCase();
-                    });
-                  }),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: TextField(
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: const BorderSide(
+                              width: 0,
+                              style: BorderStyle.none,
+                            ),
+                          ),
+                          filled: true,
+                          hintStyle: TextStyle(color: Colors.grey[800]),
+                          hintText: "Search for product",
+                          fillColor: Colors.grey[100]),
+                      onSubmitted: (value) {
+                        setState(() {
+                          _searchString = value.toLowerCase();
+                        });
+                      }),
+                ),
+              ],
             ),
           ),
         ],

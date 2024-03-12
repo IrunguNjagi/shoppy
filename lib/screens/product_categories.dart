@@ -149,7 +149,7 @@ class _ProductCategoriesState extends State<ProductCategories> {
                                         SizedBox(height: 4),
                                         Text(
                                           '\$${product['price']}',
-                                          style: GoogleFonts.poppins(fontSize: 16.0,color: Colors.black,fontWeight: FontWeight.w500),
+                                          style: GoogleFonts.poppins(fontSize: 12.0,color: Colors.black,fontWeight: FontWeight.w500),
                                         ),
                                       ],
                                     ),

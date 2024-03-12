@@ -141,17 +141,17 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
             final productData = snapshot.data!.data() as Map<String, dynamic>;
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomActionBar(
-                  hasBackArrow: true,
-                  hasTitle: true,
-                  hasBackground: false,
-                  title: productData['name'],
-                ),
-                SingleChildScrollView(
-                  child: Padding(
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomActionBar(
+                    hasBackArrow: true,
+                    hasTitle: true,
+                    hasBackground: false,
+                    title: productData['name'],
+                  ),
+                  Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -254,8 +254,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           }
         },
